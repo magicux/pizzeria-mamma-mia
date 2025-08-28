@@ -1,12 +1,87 @@
-# React + Vite
+# 🍕 Pizzería Mamma Mía - Hito 1
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto desarrollado en **React + Vite + Bootstrap** como parte del Hito 1 del curso.  
+Este proyecto implementa una primera versión de la aplicación de la pizzería **Mamma Mía**, con componentes reutilizables, props y un layout básico.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tecnologías utilizadas
+- [React](https://react.dev/) con [Vite](https://vitejs.dev/)
+- [Bootstrap 5](https://getbootstrap.com/)
+- JavaScript (ES6+)
+- CSS personalizado
+- Formato de números en CLP con `Intl.NumberFormat`
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📂 Estructura del proyecto
+pizzeria-mamma-mia/
+├─ public/
+│ └─ pizza.png # favicon personalizado
+├─ src/
+│ ├─ assets/ # imágenes (ej: hero.jpg)
+│ ├─ components/ # componentes reutilizables
+│ │ ├─ Navbar.jsx
+│ │ ├─ Footer.jsx
+│ │ ├─ Header.jsx
+│ │ └─ CardPizza.jsx
+│ ├─ views/
+│ │ └─ Home.jsx
+│ ├─ utils/
+│ │ └─ format.js # función para formatear CLP
+│ ├─ App.jsx
+│ ├─ main.jsx
+│ └─ index.css
+├─ index.html
+├─ package.json
+└─ vite.config.js
+
+
+---
+
+## 🖼️ Funcionalidades implementadas en este hito
+- **Navbar.jsx**
+  - Siempre muestra: `🍕 Home` y `🛒 Total: $XX.XXX`
+  - Muestra dinámicamente `Login / Register` o `Profile / Logout` según un `token`
+  - Total formateado con separadores de miles (CLP)
+- **Header.jsx**
+  - Sección hero con imagen de fondo, título y subtítulo centrado
+- **Home.jsx**
+  - Renderiza el Header y 3 tarjetas de pizzas (`CardPizza`)
+- **CardPizza.jsx**
+  - Muestra nombre, ingredientes, precio y botones `Ver más / Añadir`
+  - Props dinámicos: `name`, `price`, `ingredients`, `img`
+- **Footer.jsx**
+  - Texto centrado: `© 2025 - Pizzería Mamma Mía! - Todos los derechos reservados`
+
+---
+
+## ⚙️ Instalación y uso
+
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/magicux/pizzeria-mamma-mia.git
+   cd pizzeria-mamma-mia
+
+
+Instalar dependencias:
+
+npm install
+
+
+Ejecutar en desarrollo:
+
+npm run dev
+
+
+Crear build de producción:
+
+npm run build
+
+
+Previsualizar build:
+
+npm run preview
+
+🌐 Despliegue
+Pendiente para lo sproxios hitos

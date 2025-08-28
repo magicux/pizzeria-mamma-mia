@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer className="bg-dark text-light py-4 mt-5">
       <div className="container text-center small">
-        © 2021 - Pizzería Mamma Mía! - Todos los derechos reservados
+        © 2025 - Pizzería Mamma Mía! - Todos los derechos reservados
       </div>
     </footer>
   )
