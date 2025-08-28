@@ -84,4 +84,4 @@ Previsualizar build:
 npm run preview
 
 🌐 Despliegue
-Pendiente para lo sproxios hitos
+Pendiente para los próximos hitos
