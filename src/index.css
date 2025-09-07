@@ -1,4 +1,14 @@
+/* ===========================
+   VARIABLES Y BASE
+   =========================== */
 :root {
+  /* colores base que puedes reutilizar */
+  --bg-dark: #0f0f0f;
+  --bg-light: #ffffff;
+  --text-dark: #212529;
+  --text-light: #ffffff;
+
+  /* tipografía y render */
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -13,6 +23,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f8f9fa;
+  color: var(--text-dark);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* enlaces base */
 a {
   font-weight: 500;
   color: #646cff;
@@ -22,57 +49,13 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;:root {
-  --bg-dark: #0f0f0f;
-  --bg-light: #ffffff;
-}
-
-html, body, #root {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  background: #f8f9fa;
-  color: #212529;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-}
-
-/* Header hero */
-.hero {
-  background-image: url('/src/assets/imgs/Header.jpg'); /* imagen del header */
-  background-size: cover;
-  background-position: center;
-  min-height: 260px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  text-align: center;
-  padding: 3rem 1rem;
-}
-
-.hero .overlay {
-  background: rgba(0,0,0,0.45);
-  padding: 2rem;
-  border-radius: .75rem;
-}
-
-footer {
-  margin-top: 3rem;
-}
-
-  min-width: 320px;
-  min-height: 100vh;
-}
-
+/* titulado base opcional */
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
 
+/* botones base opcional */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -92,6 +75,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* tema claro opcional */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -103,4 +87,117 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* ===========================
+   LAYOUT GLOBAL
+   =========================== */
+/* Asegura navbar y footer a todo el ancho; el color ya lo da Bootstrap.
+   Si usas contenedores internos, que sean container-fluid en el JSX. */
+.navbar,
+footer {
+  width: 100%;
+}
+
+/* Footer con margen superior cuando el contenido es corto (el push real lo da el layout flex en App.jsx) */
+footer {
+  margin-top: 3rem;
+}
+
+/* ===========================
+   HERO (Header) – estilo Hito 1
+   =========================== */
+.hero {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  /* Define la imagen de fondo desde CSS (sin inline) */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 320px;     /* alto tipo banner */
+  position: relative;
+  color: var(--text-light);
+}
+
+.hero__center {
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  padding: 0 1rem;       /* solo laterales para respiración */
+}
+
+.hero__card {
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  max-width: 780px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  color: #fff; /* fuerza blanco en el contenido del card */
+}
+
+.hero__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  margin: 0;
+  color: #fff;
+}
+
+.hero__subtitle {
+  font-size: clamp(0.95rem, 1.7vw, 1.15rem);
+  margin: 0;
+  opacity: 0.95;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  color: #fff;
+}
+
+/* degradado suave inferior */
+.hero__fade {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 36px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.18),
+    rgba(0, 0, 0, 0.28)
+  );
+  pointer-events: none;
+}
+
+/* responsive del hero */
+@media (max-width: 576px) {
+  .hero,
+  .hero__center {
+    min-height: 260px;
+  }
+  .hero__card {
+    padding: 1.25rem 1rem;
+  }
+}
+
+/* ===========================
+   PÁGINAS: Login / Register
+   =========================== */
+
+/* Centrado pero con offset hacia arriba */
+.page-center {
+  min-height: calc(300vh - 100px); /* 100% de alto menos aprox navbar+footer */
+  display: flex;
+  align-items: flex-start;          /* arriba del contenedor */
+  justify-content: center;
+  padding-top: 3rem;                /* distancia desde navbar */
+  padding-bottom: 2rem;             /* deja espacio al footer */
+}
+
+
+/* Ancho máximo cómodo para las tarjetas de auth */
+.auth-card {
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
 }

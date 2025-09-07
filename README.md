@@ -1,69 +1,54 @@
-# 🍕 Pizzería Mamma Mía - Hito 1
+# 🍕 Pizzería Mamma Mía
 
-Proyecto desarrollado en **React + Vite + Bootstrap** como parte del Hito 1 del curso.  
-Este proyecto implementa una primera versión de la aplicación de la pizzería **Mamma Mía**, con componentes reutilizables, props y un layout básico.
+Proyecto desarrollado con **React + Vite** y **Bootstrap** como parte del Bootcamp **Desafío Latam**.  
+En este repositorio se implementan los **Hitos 1 y 2**, aplicando componentes, estado, eventos, validaciones y enrutamiento.
 
-Puedes visitar el sitio en github pages https://magicux.github.io/pizzeria-mamma-mia/
 
----
-
-## 🚀 Tecnologías utilizadas
-- [React](https://react.dev/) con [Vite](https://vitejs.dev/)
-- [Bootstrap 5](https://getbootstrap.com/)
-- JavaScript (ES6+)
-- CSS personalizado
-- Formato de números en CLP con `Intl.NumberFormat`
-
----
-
-## 📂 Estructura del proyecto
-pizzeria-mamma-mia/
-├─ public/
-│ └─ pizza.png # favicon personalizado
-├─ src/
-│ ├─ assets/ # imágenes (ej: hero.jpg)
-│ ├─ components/ # componentes reutilizables
-│ │ ├─ Navbar.jsx
-│ │ ├─ Footer.jsx
-│ │ ├─ Header.jsx
-│ │ └─ CardPizza.jsx
-│ ├─ views/
-│ │ └─ Home.jsx
-│ ├─ utils/
-│ │ └─ format.js # función para formatear CLP
-│ ├─ App.jsx
-│ ├─ main.jsx
-│ └─ index.css
-├─ index.html
-├─ package.json
-└─ vite.config.js
+El sitio quedará disponible en:
+👉 https://magicux.github.io/pizzeria-mamma-mia/
 
 
 ---
 
-## 🖼️ Funcionalidades implementadas en este hito
-- **Navbar.jsx**
-  - Siempre muestra: `🍕 Home` y `🛒 Total: $XX.XXX`
-  - Muestra dinámicamente `Login / Register` o `Profile / Logout` según un `token`
-  - Total formateado con separadores de miles (CLP)
-- **Header.jsx**
-  - Sección hero con imagen de fondo, título y subtítulo centrado
-- **Home.jsx**
-  - Renderiza el Header y 3 tarjetas de pizzas (`CardPizza`)
-- **CardPizza.jsx**
-  - Muestra nombre, ingredientes, precio y botones `Ver más / Añadir`
-  - Props dinámicos: `name`, `price`, `ingredients`, `img`
-- **Footer.jsx**
-  - Texto centrado: `© 2025 - Pizzería Mamma Mía! - Todos los derechos reservados`
+## 📌 Hitos
+
+### ✅ Hito 1
+- Configuración del proyecto con **React + Vite**.
+- Integración de **Bootstrap** para estilos.
+- Creación de componentes base:
+  - `Navbar` (barra de navegación).
+  - `Header` (banner/hero con imagen de fondo y texto central).
+  - `Footer` (pie de página full-width).
+  - `CardPizza` (componente reutilizable para pizzas).
+  - `Home` (vista principal que renderiza cards de pizzas).
+
+### ✅ Hito 2
+- Manejo de **estado** y **eventos** en React.
+- Creación de formularios con validaciones:
+  - `RegisterPage`:
+    - Campos: Email, Contraseña, Confirmar contraseña.
+    - Validaciones: campos obligatorios, mínimo 6 caracteres, confirmación igual a contraseña.
+  - `LoginPage`:
+    - Campos: Email, Contraseña.
+    - Validaciones: campos obligatorios, mínimo 6 caracteres.
+- Mensajes dinámicos de éxito/error en ambos formularios.
+- Navegación mediante **React Router**:
+  - `/` → Home
+  - `/login` → LoginPage
+  - `/register` → RegisterPage
+- Formularios centrados y adaptados al diseño del sitio (hero + cards).
+- Navbar y Footer full-width, coherentes en todas las páginas.
 
 ---
 
-## ⚙️ Instalación y uso
+## 🚀 Instalación y ejecución
 
 1. Clonar el repositorio:
    ```bash
    git clone https://github.com/magicux/pizzeria-mamma-mia.git
-   cd pizzeria-mamma-mia
+Entrar a la carpeta del proyecto:
+
+cd pizzeria-mamma-mia
 
 
 Instalar dependencias:
@@ -71,19 +56,78 @@ Instalar dependencias:
 npm install
 
 
-Ejecutar en desarrollo:
+Iniciar servidor de desarrollo:
 
 npm run dev
 
 
-Crear build de producción:
+Compilar para producción:
 
 npm run build
 
+📂 Estructura del proyecto
+src/
+├── assets/
+│   └── imgs/
+│       └── Header.jpg       # imagen del hero/banner
+├── components/
+│   ├── Navbar.jsx           # barra de navegación
+│   ├── Header.jsx           # hero/banner
+│   ├── Footer.jsx           # pie de página
+│   ├── CardPizza.jsx        # componente reutilizable de pizzas
+│   ├── LoginPage.jsx        # formulario de login (Hito 2)
+│   └── RegisterPage.jsx     # formulario de registro (Hito 2)
+├── data/
+│   └── pizzas.js            # data de pizzas (opcional)
+├── views/
+│   └── Home.jsx             # vista principal con header + cards
+├── utils/
+│   └── format.js            # helper para formateo de CLP
+├── App.jsx                  # enrutamiento y layout principal
+├── main.jsx                 # punto de entrada con ReactDOM
+└── index.css                # estilos globales (hero, auth, layout)
+🛠 Tecnologías utilizadas
 
-Previsualizar build:
+React + Vite
 
-npm run preview
+Bootstrap
 
-🌐 Despliegue
-Pendiente para los próximos hitos
+React Router DOM
+
+JavaScript (ES6+)
+
+🌐 Deploy en GitHub Pages
+
+Instalar dependencia de deploy:
+
+npm install gh-pages --save-dev
+
+
+Configurar vite.config.js:
+
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  base: "/pizzeria-mamma-mia/",
+  plugins: [react()],
+});
+
+
+Agregar scripts en package.json:
+
+"scripts": {
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
+}
+
+
+Ejecutar:
+
+npm run deploy
+
+
+👨‍💻 Autor
+
+Proyecto realizado por Daniel Aros en el marco del Bootcamp Desafío Latam.
+
