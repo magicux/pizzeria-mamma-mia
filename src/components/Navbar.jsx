@@ -1,9 +1,11 @@
+// src/components/Navbar.jsx
 import { NavLink } from "react-router-dom";
 import { clp } from "../utils/format";
+import { useCart } from "../context/CartContext.jsx"; // contexto
 
 const Navbar = () => {
-  const total = 25000;
-  const token = false; // true = logueado, false = no logueado (simulación)
+  const { total } = useCart(); // total ahora viene del contexto
+  const token = false; // simulación
 
   const linkClass = ({ isActive }) =>
     "btn btn-outline-light" + (isActive ? " fw-bold" : "");
@@ -40,10 +42,10 @@ const Navbar = () => {
           </>
         )}
 
-        {/* Total (siempre visible) */}
-        <button className="btn btn-success">
+        {/* Total actualizable */}
+        <NavLink to="/cart" className="btn btn-success">
           🛒 Total: ${clp(total)}
-        </button>
+        </NavLink>
       </div>
     </nav>
   );
