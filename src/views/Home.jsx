@@ -1,31 +1,47 @@
-import Header from "../components/Header.jsx";
+import { useEffect, useState } from "react";
+// Hito 4: consumir API
+import { getPizzas } from "../services/api";
+// Antes importaba datos locales desde el archivo pizzas.js
+// import { pizzas as localPizzas } from "../data/pizzas";
 import CardPizza from "../components/CardPizza.jsx";
-import { pizzas } from "../data/pizzas";
 
-// src/views/Home.jsx
+export default function Home() {
+  // Hito 4: estado para datos remotos
+  const [pizzas, setPizzas] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  // Hito 4: traer pizzas desde la API al montar
+  useEffect(() => {
+    let mounted = true;
+    getPizzas()
+      .then((data) => {
+        if (!mounted) return;
+        setPizzas(data);
+      })
+      .catch(() => {
+        if (!mounted) return;
+        setError("No fue posible cargar las pizzas desde la API");
+        // fallback opcional a datos locales si quieres:
+        // setPizzas(localPizzas);
+      })
+      .finally(() => mounted && setLoading(false));
+    return () => (mounted = false);
+  }, []);
 
-const Home = () => {
+  if (loading) return <div className="container py-5">Cargando pizzas...</div>;
+  if (error) return <div className="container py-5 text-danger">{error}</div>;
+
   return (
-    <>
-      <Header />
-    
-    <main className="container py-4">
-      <h2 className="mb-4">Nuestro Menú 🍕</h2>
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    <div className="container py-4">
+      <div className="row g-4">
         {pizzas.map((p) => (
-          <CardPizza
-            key={p.id}
-            name={p.name}
-            price={p.price}
-            ingredients={p.ingredients}
-            img={p.img}
-          />
+          <div key={p.id} className="col-12 col-sm-6 col-lg-4">
+            {/* Se mantiene la card original, solo le paso los datos desde API */}
+            <CardPizza {...p} />
+          </div>
         ))}
       </div>
-    </main>
-    </>
+    </div>
   );
-};
-
-export default Home;
+}

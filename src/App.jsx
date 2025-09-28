@@ -4,6 +4,7 @@ import Footer from "./components/Footer.jsx";
 import Home from "./views/Home.jsx";
 import LoginPage from "./components/LoginPage.jsx";
 import RegisterPage from "./components/RegisterPage.jsx";
+import Pizza from "./components/Pizza.jsx";
 import Cart from "./components/Cart.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 
@@ -16,6 +17,7 @@ function App() {
       <main className="flex-grow-1">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/pizza" element={<Pizza />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/cart" element={<Cart />} />

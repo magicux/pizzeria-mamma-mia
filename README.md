@@ -1,236 +1,259 @@
-🍕 Pizzería Mamma Mía
+# 🍕 Pizzería Mamma Mía
 
-Proyecto desarrollado con React + Vite y Bootstrap como parte del Bootcamp Desafío Latam.
-En este repositorio se implementan los Hitos 1, 2 y 3, aplicando componentes, estado, eventos, validaciones, enrutamiento y carrito con estado global.
+Proyecto desarrollado con **React + Vite** y **Bootstrap** como parte del Bootcamp **Desafío Latam**.  
+En este repositorio se implementan los **Hitos 1, 2, 3 y 4**, aplicando componentes, estado, eventos, enrutamiento, consumo de API y contexto global.
 
-El sitio quedará disponible en:
-👉 https://magicux.github.io/pizzeria-mamma-mia/
+> **Demo (GH Pages):** https://magicux.github.io/pizzeria-mamma-mia/  
+> ⚠️ La demo pública no puede llamar a la API local del Hito 4. Para probar Hito 4, ejecuta el backend y el frontend **en local**.
 
-📌 Hitos
-✅ Hito 1
+---
 
-Configuración del proyecto con React + Vite.
+## 📌 Hitos
 
-Integración de Bootstrap para estilos.
+### ✅ Hito 1
+- Configuración del proyecto con **React + Vite**.
+- Integración de **Bootstrap** para estilos.
+- Componentes base:
+  - `Navbar` (barra de navegación).
+  - `Header` (hero con imagen y texto central).
+  - `Footer` (pie de página full-width).
+  - `CardPizza` (card reutilizable).
+  - `Home` (vista principal con grid de cards).
 
-Creación de componentes base:
+### ✅ Hito 2
+- Manejo de **estado** y **eventos**.
+- Formularios con validaciones:
+  - `RegisterPage`: email, contraseña y confirmación (mín. 6 caracteres).
+  - `LoginPage`: email y contraseña (mín. 6).
+- Mensajes de éxito/error con estilos Bootstrap.
+- Rutas principales: `/`, `/login`, `/register`.
 
-Navbar (barra de navegación).
+### ✅ Hito 3
+- **Carrito de compras** con **Context API** (`CartContext`).
+- Total del carrito visible en `Navbar`.
+- Vista `Cart` con **+/-**, eliminación al llegar a 0 y **cálculo de total**.
+- **Conversión de moneda** con helper `clp()` en `src/utils/format.js` para mostrar precios en CLP.
 
-Header (banner/hero con imagen de fondo y texto central).
+### ✅ Hito 4
+- **Consumo de API (Material de apoyo – Backend Pizzas)**.
+- Nuevo servicio `src/services/api.js` con:
+  - `getPizzas()` → lista.
+  - `getPizzaById(id)` → detalle.
+- `Home.jsx` ahora **obtiene las pizzas desde la API** y renderiza las cards (con estados de carga y error).
+- Nueva vista `Pizza.jsx` que **muestra el detalle por id fijo `p001`**:
+  - nombre, imagen, descripción, ingredientes y **precio con `clp()`**.
+  - botón **“Añadir al carrito” presente pero deshabilitado** (según requerimiento).
+- **Rutas**:
+  - Fija: `/pizza` → muestra `p001`.
+ 
+ - Mantención de estilos y estructura existentes (Bootstrap + layout actual).
+- En el código nuevo se marcan comentarios `// Hito 4`.
 
-Footer (pie de página full-width).
+---
 
-CardPizza (componente reutilizable para pizzas).
+## 🗂️ Estructura del proyecto (resumen)
 
-Home (vista principal que renderiza cards de pizzas).
-
-✅ Hito 2
-
-Manejo de estado y eventos en React.
-
-Creación de formularios con validaciones:
-
-RegisterPage:
-
-Campos: Email, Contraseña, Confirmar contraseña.
-
-Validaciones: campos obligatorios, mínimo 6 caracteres, confirmación igual a contraseña.
-
-LoginPage:
-
-Campos: Email, Contraseña.
-
-Validaciones: campos obligatorios, mínimo 6 caracteres.
-
-Mensajes dinámicos de éxito/error en ambos formularios.
-
-Navegación mediante React Router:
-
-/ → Home
-
-/login → LoginPage
-
-/register → RegisterPage
-
-Formularios centrados y adaptados al diseño del sitio (hero + cards).
-
-Navbar y Footer full-width, coherentes en todas las páginas.
-
-✅ Hito 3
-
-Datos de pizzas centralizados en src/data/pizzas.js:
-
-pizzas (catálogo de 6 pizzas).
-
-pizzaCart (estado inicial del carrito).
-
-El proyecto parte mostrando exactamente lo que haya en pizzaCart.
-
-Carrito (/cart) con:
-
-Listado de productos del carrito.
-
-Botones + / − por ítem; si la cantidad llega a 0, el ítem se elimina.
-
-Total calculado dinámicamente.
-
-Botón “Pagar” (sin acción por ahora).
-
-Estado global del carrito con Context API:
-
-src/context/CartContext.jsx expone cart, inc, dec, add, total, count.
-
-El Navbar muestra el total en CLP y se actualiza en tiempo real.
-
-Formato de moneda local a través de utilitario clp (src/utils/format.js), usado de manera consistente en Navbar, CardPizza y Cart.
-
-Navbar enlaza al carrito usando NavLink con las mismas clases Bootstrap (no se rompen estilos).
-
-(UX opcional): Si el carrito queda vacío, se puede mostrar un catálogo para seguir comprando (no afecta los requisitos del hito).
-
-## 🚀 Instalación y ejecución
-
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/magicux/pizzeria-mamma-mia.git
-Entrar a la carpeta del proyecto:
-
-cd pizzeria-mamma-mia
-
-
-Instalar dependencias:
-
-npm install
-
-
-Iniciar servidor de desarrollo:
-
-npm run dev
-
-
-Compilar para producción:
-
-npm run build
-
-📂 Estructura del proyecto
-
+```
 src/
-├── assets/
-│   └── imgs/
-│       └── Header.jpg            # imagen del hero/banner
-├── components/
-│   ├── Navbar.jsx                # barra de navegación (link a /cart y total dinámico)
-│   ├── Header.jsx                # hero/banner
-│   ├── Footer.jsx                # pie de página
-│   ├── CardPizza.jsx             # componente de tarjeta para pizzas (usa clp)
-│   ├── LoginPage.jsx             # formulario de login (Hito 2)
-│   ├── RegisterPage.jsx          # formulario de registro (Hito 2)
-│   └── Cart.jsx                  # carrito (Hito 3) +/−, elimina en 0, total
-├── context/
-│   └── CartContext.jsx           # estado global del carrito (Hito 3)
-├── data/
-│   └── pizzas.js                 # data de pizzas + pizzaCart (estado inicial)
-├── utils/
-│   └── format.js                 # helper para formateo CLP (clp)
-├── views/
-│   └── Home.jsx                  # vista principal con header + cards (usa pizzas.js)
-├── App.jsx                       # enrutamiento y layout principal (incluye /cart)
-├── main.jsx                      # punto de entrada con ReactDOM
-└── index.css                     # estilos globales (hero, auth, layout)
+├─ assets/
+├─ components/
+│  ├─ Navbar.jsx
+│  ├─ Header.jsx
+│  ├─ Footer.jsx
+│  ├─ CardPizza.jsx
+│  ├─ LoginPage.jsx
+│  ├─ RegisterPage.jsx
+│  ├─ Cart.jsx
+│  └─ Pizza.jsx                # ← Hito 4 (detalle p001)
+├─ context/
+│  └─ CartContext.jsx
+├─ services/
+│  └─ api.js                   # ← Hito 4 (getPizzas/getPizzaById)
+├─ utils/
+│  └─ format.js                # clp() para CLP
+├─ views/
+│  └─ Home.jsx                 # ahora consume API (Hito 4)
+├─ App.jsx                     # rutas (incluye /pizza)
+└─ main.jsx
+```
+
+---
+
+## ⚙️ Requisitos
+
+- Node.js 18+ (recomendado)
+- npm 9+  
+*(Y para Hito 4 en local, ejecutar también el backend de apoyo)*
+
+---
+
+## 🧩 Instalación — Frontend
+
+```bash
+git clone https://github.com/magicux/pizzeria-mamma-mia.git
+cd pizzeria-mamma-mia
+npm install
+```
+
+### Variables de entorno (opción recomendada)
+Crea un archivo `.env` en la raíz del frontend:
+
+```
+VITE_API_BASE=http://localhost:5000
+```
+
+El servicio `src/services/api.js` usa `import.meta.env.VITE_API_BASE` para construir las URLs.
+
+---
+
+## 🍕 Backend (Material de apoyo – API Pizzas)
+
+1) Descomprime **“Material de apoyo – Backend Pizzas”** en una carpeta aparte (por ej. `backend-pizzas/`).  
+2) En esa carpeta:
+
+```bash
+npm install
+npm start
+```
+
+- Servirá en: `http://localhost:5000`  
+- Endpoints usados por el frontend:
+  - `GET /api/pizzas`  
+  - `GET /api/pizzas/p001`
+
+### Evitar CORS en desarrollo (dos opciones)
+
+**A) Usar variable de entorno (recomendado):**  
+Define `VITE_API_BASE=http://localhost:5000` y consume `fetch(${VITE_API_BASE}/api/...)` desde el frontend (ya implementado en `api.js`).
+
+**B) Usar proxy de Vite (alternativa):**  
+Si prefieres llamar a `/api/...` sin dominio en dev, agrega proxy en `vite.config.js`:
+
+```js
+// vite.config.js (fragmento)
+export default defineConfig({
+  base: "/pizzeria-mamma-mia/",
+  plugins: [react()],
+  server: {
+    proxy: { "/api": "http://localhost:5000" }
+  }
+});
+```
+
+> **Nota:** En **GitHub Pages** el frontend es estático; para demo pública de Hito 4 necesitas hospedar la API o probar localmente.
+
+---
+
+## ▶️ Ejecutar en desarrollo
+
+En una terminal (backend):
+```bash
+cd backend-pizzas
+npm start
+```
+
+En otra terminal (frontend):
+```bash
+cd pizzeria-mamma-mia
+npm run dev
+```
+
+- Frontend: `http://localhost:5173`  
+- Backend: `http://localhost:5000`
+
+---
+
+## 🧭 Rutas principales
+
+- `/` → **Home** (cards desde API).  
+- `/login` y `/register` → formularios con validación.  
+- `/cart` → carrito con Context.  
+- `/pizza` → **página única Hito 4** (id fijo `p001`).  
 
 
-🔧 Detalles de implementación del Hito 3
+---
 
-Contexto del carrito
-CartContext.jsx inicializa su estado con pizzaCart desde src/data/pizzas.js para partir mostrando esos ítems.
-Expone:
+## 💰 Conversión de moneda
 
-inc(id): suma 1 a la cantidad.
+Se utiliza **`clp()`** desde `src/utils/format.js` para mostrar precios en pesos chilenos de manera consistente en todas las vistas.
 
-dec(id): resta 1 y elimina el ítem si queda en 0.
+---
 
-add(id): agrega una pizza del catálogo si no existe en el carrito (o incrementa si ya existe).
+## 🧪 Cómo verificar llamadas a la API en Chrome
 
-total: suma de price * qty.
+1. Abre la app y **DevTools** (`F12` / `Ctrl+Shift+I`).  
+2. Pestaña **Network** → marca **Disable cache**.  
+3. Filtra por `api` y **recarga**.  
+4. Deberías ver `GET /api/pizzas` o `http://localhost:5000/api/pizzas`.  
+   - **200**: OK.  
+   - **(blocked:cors)**: usar proxy de Vite o habilitar CORS en backend.  
+   - **ERR_CONNECTION_REFUSED**: backend apagado.  
+5. Haz clic en la request → **Preview/Response** para ver el JSON.
 
-count: suma de cantidades (para badges si se quiere).
+---
 
-App.jsx
-La app se envuelve con <CartProvider> y se agrega la ruta /cart:
+## 📦 Scripts
 
-<CartProvider>
-  <Navbar />
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/login" element={<LoginPage />} />
-    <Route path="/register" element={<RegisterPage />} />
-    <Route path="/cart" element={<Cart />} />
-  </Routes>
-  <Footer />
-</CartProvider>
+- `dev` → servidor de desarrollo Vite.  
+- `build` → build de producción.  
+- `preview` → vista previa del build.  
+- (opcional) `predeploy` / `deploy` → GitHub Pages con `gh-pages`.
 
+---
 
-Navbar.jsx
-Se reemplaza el botón final por un NavLink a /cart, manteniendo las clases Bootstrap y el total en CLP con clp(total):
+## 🚀 Deploy en GitHub Pages
 
-<NavLink to="/cart" className="btn btn-success">
-  🛒 Total: ${clp(total)}
-</NavLink>
+1) Instalar `gh-pages`:
 
+```bash
+npm i -D gh-pages
+```
 
-Cart.jsx
-Recorre cart desde el contexto, muestra + / − y elimina ítems con qty 0.
-Muestra Total usando clp(total) y deja “Pagar” deshabilitable si está vacío.
-(Opcional UX): si cart.length === 0, renderiza un catálogo con pizzas para seguir agregando.
+2) `vite.config.js`:
 
-Formateo CLP
-Todo precio se muestra con clp(valor).
-Si clp no añade el símbolo, se antepone $ (p. ej. ${clp(total)}).
-
-
-🛠 Tecnologías utilizadas
-
-React + Vite
-
-Bootstrap
-
-React Router DOM
-
-JavaScript (ES6+)
-
-🌐 Deploy en GitHub Pages
-
-Instalar dependencia de deploy:
-
-npm install gh-pages --save-dev
-
-
-Configurar vite.config.js:
-
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-
+```js
 export default defineConfig({
   base: "/pizzeria-mamma-mia/",
   plugins: [react()],
 });
+```
 
+3) `package.json`:
 
-Agregar scripts en package.json:
-
+```json
 "scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview",
   "predeploy": "npm run build",
   "deploy": "gh-pages -d dist"
 }
+```
 
+4) Publicar:
 
-Ejecutar:
-
+```bash
 npm run deploy
+```
 
+> **Importante:** La versión publicada en GH Pages no podrá consumir tu API local. Usa la ejecución local para evaluar Hito 4.
 
-👨‍💻 Autor
+---
 
-Proyecto realizado por Daniel Aros en el marco del Bootcamp Desafío Latam.
+## 🛠️ Tecnologías
+
+- **React + Vite**
+- **Bootstrap 5**
+- **React Router DOM**
+- **Context API**
+- **API REST (Node + Express del material de apoyo)**
+- **gh-pages** para deploy
+
+---
+
+## 👤 Autor
+
+Proyecto realizado por **Daniel Aros** en el marco del Bootcamp **Desafío Latam**.
+
+---
 

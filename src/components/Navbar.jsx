@@ -22,7 +22,11 @@ const Navbar = () => {
         <NavLink to="/" className={linkClass} end>
           🍕 Home
         </NavLink>
-
+        {/* Hito 4  (P001) */}
+        <NavLink to="/pizza" className={linkClass} end>
+          🍕 Pizza (Hito 4)
+        </NavLink>        
+  
         {/* Botones según token */}
         {token ? (
           <>

@@ -17,7 +17,7 @@ const CardPizza = ({ name, price, ingredients, img }) => {
           </ul>
           <div className="d-flex justify-content-between align-items-center">
             <span className="fw-bold fs-5">
-              ${clp(price)}  {/* ← reemplazo de toLocaleString */}
+              ${clp(price)}  {/* reemplazo de toLocaleString */}
             </span>
             <button className="btn btn-primary">Añadir</button>
           </div>
