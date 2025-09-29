@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 // Hito 4: consumir API
 import { getPizzas } from "../services/api";
+import Header from "../components/Header.jsx";
 // Antes importaba datos locales desde el archivo pizzas.js
 // import { pizzas as localPizzas } from "../data/pizzas";
 import CardPizza from "../components/CardPizza.jsx";
@@ -32,16 +33,18 @@ export default function Home() {
   if (loading) return <div className="container py-5">Cargando pizzas...</div>;
   if (error) return <div className="container py-5 text-danger">{error}</div>;
 
-  return (
+return (
+  <>
+    <Header />
     <div className="container py-4">
       <div className="row g-4">
         {pizzas.map((p) => (
           <div key={p.id} className="col-12 col-sm-6 col-lg-4">
-            {/* Se mantiene la card original, solo le paso los datos desde API */}
             <CardPizza {...p} />
           </div>
         ))}
       </div>
     </div>
-  );
+  </>
+);
 }
