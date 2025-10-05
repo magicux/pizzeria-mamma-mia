@@ -5,7 +5,7 @@ import { useCart } from "../context/CartContext.jsx"; // contexto
 
 const Navbar = () => {
   const { total } = useCart(); // total ahora viene del contexto
-  const token = false; // simulación
+  const token = true; // simulación
 
   const linkClass = ({ isActive }) =>
     "btn btn-outline-light" + (isActive ? " fw-bold" : "");
@@ -31,7 +31,7 @@ const Navbar = () => {
         {token ? (
           <>
             <NavLink to="/profile" className={linkClass}>
-              🔓 Profile
+               👤 Profile
             </NavLink>
             <button className="btn btn-outline-light">🔒 Logout</button>
           </>

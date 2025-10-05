@@ -1,5 +1,5 @@
 // src/components/Cart.jsx
-import { clp } from "../utils/format";
+import { clp } from "../utils/format.js";
 import { useCart } from "../context/CartContext.jsx";
 import { pizzas } from "../data/pizzas.js";
 
