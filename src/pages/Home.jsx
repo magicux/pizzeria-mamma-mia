@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 // Hito 4: consumir API
-import { getPizzas } from "../services/api";
+import { getPizzas } from "../services/api.js";
 import Header from "../components/Header.jsx";
 // Antes importaba datos locales desde el archivo pizzas.js
 // import { pizzas as localPizzas } from "../data/pizzas";
