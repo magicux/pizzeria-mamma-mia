@@ -1,259 +1,216 @@
 # 🍕 Pizzería Mamma Mía
 
 Proyecto desarrollado con **React + Vite** y **Bootstrap** como parte del Bootcamp **Desafío Latam**.  
-En este repositorio se implementan los **Hitos 1, 2, 3 y 4**, aplicando componentes, estado, eventos, enrutamiento, consumo de API y contexto global.
-
-> **Demo (GH Pages):** https://magicux.github.io/pizzeria-mamma-mia/  
-> ⚠️ La demo pública no puede llamar a la API local del Hito 4. Para probar Hito 4, ejecuta el backend y el frontend **en local**.
+Implementa componentes reutilizables, manejo de estado, enrutamiento con React Router y un **carrito de compras** con Context API.
 
 ---
 
-## 📌 Hitos
+## 🧭 Hitos
 
 ### ✅ Hito 1
 - Configuración del proyecto con **React + Vite**.
-- Integración de **Bootstrap** para estilos.
+- Integración de **Bootstrap**.
 - Componentes base:
-  - `Navbar` (barra de navegación).
-  - `Header` (hero con imagen y texto central).
-  - `Footer` (pie de página full-width).
-  - `CardPizza` (card reutilizable).
-  - `Home` (vista principal con grid de cards).
+  - `Navbar`, `Header`, `Footer`, `CardPizza`.
+  - `Home` (vista principal que renderiza cards de pizzas).
 
 ### ✅ Hito 2
-- Manejo de **estado** y **eventos**.
-- Formularios con validaciones:
-  - `RegisterPage`: email, contraseña y confirmación (mín. 6 caracteres).
-  - `LoginPage`: email y contraseña (mín. 6).
-- Mensajes de éxito/error con estilos Bootstrap.
-- Rutas principales: `/`, `/login`, `/register`.
+- Manejo de **estado** y **eventos** en React.
+- **Formularios** (Login / Register) con validaciones básicas.  
+  > **Importante:** los estilos de los formularios se mantienen sin cambios.
 
-### ✅ Hito 3
-- **Carrito de compras** con **Context API** (`CartContext`).
-- Total del carrito visible en `Navbar`.
-- Vista `Cart` con **+/-**, eliminación al llegar a 0 y **cálculo de total**.
-- **Conversión de moneda** con helper `clp()` en `src/utils/format.js` para mostrar precios en CLP.
+### ✅ Hito 5 (enfatizado en este README)
+**Objetivo:** incorporar **enrutamiento con React Router** y estandarizar la estructura **pages** para las vistas.
 
-### ✅ Hito 4
-- **Consumo de API (Material de apoyo – Backend Pizzas)**.
-- Nuevo servicio `src/services/api.js` con:
-  - `getPizzas()` → lista.
-  - `getPizzaById(id)` → detalle.
-- `Home.jsx` ahora **obtiene las pizzas desde la API** y renderiza las cards (con estados de carga y error).
-- Nueva vista `Pizza.jsx` que **muestra el detalle por id fijo `p001`**:
-  - nombre, imagen, descripción, ingredientes y **precio con `clp()`**.
-  - botón **“Añadir al carrito” presente pero deshabilitado** (según requerimiento).
-- **Rutas**:
-  - Fija: `/pizza` → muestra `p001`.
- 
- - Mantención de estilos y estructura existentes (Bootstrap + layout actual).
-- En el código nuevo se marcan comentarios `// Hito 4`.
+**Checklist del Hito 5 (cumplido):**
+- [x] Migración/organización de vistas en `src/pages/`:
+  - `Home.jsx`, `Login.jsx`, `Register.jsx`, `Cart.jsx`, `Pizza.jsx`, `Profile.jsx`, `NotFound.jsx`.
+- [x] **Mapa de rutas**:
+  - `/` → Home  
+  - `/login` → Login (form existente, **sin cambios de estilos**)  
+  - `/register` → Register (form existente, **sin cambios de estilos**)  
+  - `/cart` → Cart  
+  - `/pizza/p001` → **Detalle fijo** de una pizza (ruta **estática** exigida por el hito)  
+  - `/profile` → **Profile** (email estático + botón “Cerrar sesión”)  
+  - `*` → **NotFound** (404 con botón “Volver al inicio”)
+- [x] `Navbar` con **Links** a las rutas y **botón 🛒** que redirige a `/cart` mostrando el **Total** del carrito.
+- [x] Página **NotFound** dedicada (no un H2 inline).
+- [x] Mantener `HashRouter`/`BrowserRouter` según despliegue (para **GitHub Pages** se recomienda `HashRouter`).
 
 ---
 
-## 🗂️ Estructura del proyecto (resumen)
+## 🗂️ Estructura de carpetas
 
-```
+```bash
 src/
-├─ assets/
-├─ components/
-│  ├─ Navbar.jsx
-│  ├─ Header.jsx
-│  ├─ Footer.jsx
-│  ├─ CardPizza.jsx
-│  ├─ LoginPage.jsx
-│  ├─ RegisterPage.jsx
-│  ├─ Cart.jsx
-│  └─ Pizza.jsx                # ← Hito 4 (detalle p001)
-├─ context/
-│  └─ CartContext.jsx
-├─ services/
-│  └─ api.js                   # ← Hito 4 (getPizzas/getPizzaById)
-├─ utils/
-│  └─ format.js                # clp() para CLP
-├─ views/
-│  └─ Home.jsx                 # ahora consume API (Hito 4)
-├─ App.jsx                     # rutas (incluye /pizza)
-└─ main.jsx
+  components/
+    Navbar.jsx
+    Footer.jsx
+    CardPizza.jsx
+    # otros componentes reutilizables
+  context/
+    CartContext.jsx
+  pages/
+    Home.jsx
+    Login.jsx          # (basado en tu LoginPage original, mismo estilo)
+    Register.jsx       # (basado en tu RegisterPage original, mismo estilo)
+    Cart.jsx
+    Pizza.jsx          # /pizza/p001 (ruta fija)
+    Profile.jsx        # email estático + botón "Cerrar sesión"
+    NotFound.jsx       # 404 con botón "Volver al inicio"
+  App.jsx
+  main.jsx
+  index.css
 ```
+
+> **Nota:** Se respeta el diseño y estilos existentes de los formularios (Login/Register).
 
 ---
 
-## ⚙️ Requisitos
+## 🧩 Enrutamiento (React Router)
 
-- Node.js 18+ (recomendado)
-- npm 9+  
-*(Y para Hito 4 en local, ejecutar también el backend de apoyo)*
+`App.jsx` define las rutas y envuelve la app con el **CartProvider**:
 
----
+```jsx
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx";
 
-## 🧩 Instalación — Frontend
+import Home from "./pages/Home.jsx";
+import Login from "./pages/LoginPage.jsx";
+import Register from "./pages/RegisterPage.jsx";
+import Cart from "./pages/Cart.jsx";
+import Pizza from "./pages/Pizza.jsx";
+import Profile from "./pages/Profile.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
-```bash
-git clone https://github.com/magicux/pizzeria-mamma-mia.git
-cd pizzeria-mamma-mia
-npm install
-```
+import { CartProvider } from "./context/CartContext.jsx";
 
-### Variables de entorno (opción recomendada)
-Crea un archivo `.env` en la raíz del frontend:
-
-```
-VITE_API_BASE=http://localhost:5000
-```
-
-El servicio `src/services/api.js` usa `import.meta.env.VITE_API_BASE` para construir las URLs.
-
----
-
-## 🍕 Backend (Material de apoyo – API Pizzas)
-
-1) Descomprime **“Material de apoyo – Backend Pizzas”** en una carpeta aparte (por ej. `backend-pizzas/`).  
-2) En esa carpeta:
-
-```bash
-npm install
-npm start
-```
-
-- Servirá en: `http://localhost:5000`  
-- Endpoints usados por el frontend:
-  - `GET /api/pizzas`  
-  - `GET /api/pizzas/p001`
-
-### Evitar CORS en desarrollo (dos opciones)
-
-**A) Usar variable de entorno (recomendado):**  
-Define `VITE_API_BASE=http://localhost:5000` y consume `fetch(${VITE_API_BASE}/api/...)` desde el frontend (ya implementado en `api.js`).
-
-**B) Usar proxy de Vite (alternativa):**  
-Si prefieres llamar a `/api/...` sin dominio en dev, agrega proxy en `vite.config.js`:
-
-```js
-// vite.config.js (fragmento)
-export default defineConfig({
-  base: "/pizzeria-mamma-mia/",
-  plugins: [react()],
-  server: {
-    proxy: { "/api": "http://localhost:5000" }
-  }
-});
-```
-
-> **Nota:** En **GitHub Pages** el frontend es estático; para demo pública de Hito 4 necesitas hospedar la API o probar localmente.
-
----
-
-## ▶️ Ejecutar en desarrollo
-
-En una terminal (backend):
-```bash
-cd backend-pizzas
-npm start
-```
-
-En otra terminal (frontend):
-```bash
-cd pizzeria-mamma-mia
-npm run dev
-```
-
-- Frontend: `http://localhost:5173`  
-- Backend: `http://localhost:5000`
-
----
-
-## 🧭 Rutas principales
-
-- `/` → **Home** (cards desde API).  
-- `/login` y `/register` → formularios con validación.  
-- `/cart` → carrito con Context.  
-- `/pizza` → **página única Hito 4** (id fijo `p001`).  
-
-
----
-
-## 💰 Conversión de moneda
-
-Se utiliza **`clp()`** desde `src/utils/format.js` para mostrar precios en pesos chilenos de manera consistente en todas las vistas.
-
----
-
-## 🧪 Cómo verificar llamadas a la API en Chrome
-
-1. Abre la app y **DevTools** (`F12` / `Ctrl+Shift+I`).  
-2. Pestaña **Network** → marca **Disable cache**.  
-3. Filtra por `api` y **recarga**.  
-4. Deberías ver `GET /api/pizzas` o `http://localhost:5000/api/pizzas`.  
-   - **200**: OK.  
-   - **(blocked:cors)**: usar proxy de Vite o habilitar CORS en backend.  
-   - **ERR_CONNECTION_REFUSED**: backend apagado.  
-5. Haz clic en la request → **Preview/Response** para ver el JSON.
-
----
-
-## 📦 Scripts
-
-- `dev` → servidor de desarrollo Vite.  
-- `build` → build de producción.  
-- `preview` → vista previa del build.  
-- (opcional) `predeploy` / `deploy` → GitHub Pages con `gh-pages`.
-
----
-
-## 🚀 Deploy en GitHub Pages
-
-1) Instalar `gh-pages`:
-
-```bash
-npm i -D gh-pages
-```
-
-2) `vite.config.js`:
-
-```js
-export default defineConfig({
-  base: "/pizzeria-mamma-mia/",
-  plugins: [react()],
-});
-```
-
-3) `package.json`:
-
-```json
-"scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
+function App() {
+  return (
+    <CartProvider>
+      <div className="d-flex flex-column min-vh-100">
+        <Navbar />
+        <main className="flex-grow-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/pizza/p001" element={<Pizza />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </CartProvider>
+  );
 }
+export default App;
 ```
 
-4) Publicar:
+En `main.jsx`:  
+- Para **GitHub Pages**, usa `HashRouter`.  
+- Para hosting tradicional (servidor con soporte a history API), `BrowserRouter`.
+
+---
+
+## 🛒 Navbar y Carrito
+
+- `Navbar` usa `NavLink`/`Link` para navegación.
+- El botón **🛒 Total** redirige a `/cart` y muestra el total desde el **CartContext**.
+- **No** se agrega `/pizza/p001` al menú (requisito del hito).
+
+---
+
+## 👤 Profile y 🚫 NotFound
+
+- `Profile.jsx` muestra un **email estático** y un **botón “Cerrar sesión”** (sin lógica de auth en este hito).
+- `NotFound.jsx` entrega una pantalla 404 con **botón para volver al inicio**.
+
+---
+
+## ▶️ Scripts
 
 ```bash
-npm run deploy
+# instalar dependencias
+npm install
+
+# entorno de desarrollo
+npm run dev
+
+# build de producción
+npm run build
+
+# previsualizar build
+npm run preview
 ```
 
-> **Importante:** La versión publicada en GH Pages no podrá consumir tu API local. Usa la ejecución local para evaluar Hito 4.
+---
+
+## 🚀 Despliegue en GitHub Pages (opcional)
+
+1) Usa `HashRouter` en `main.jsx`.  
+2) Publica `dist` en GitHub Pages (branch `gh-pages` o desde Settings → Pages).  
+3) Si usas subruta (`/pizzeria-mamma-mia/`), configura la `base` de Vite.
 
 ---
 
-## 🛠️ Tecnologías
+## 🔧 Troubleshooting rápido
 
-- **React + Vite**
-- **Bootstrap 5**
-- **React Router DOM**
-- **Context API**
-- **API REST (Node + Express del material de apoyo)**
-- **gh-pages** para deploy
+- **“does not provide an export named 'default'”**  
+  Exporta como **default** en cada página:
+  ```jsx
+  export default function NotFound() { ... }
+  export default function Profile() { ... }
+  ```
+
+- **“useCart debe usarse dentro de <CartProvider>”**  
+  Verifica que quien usa `useCart()` (p. ej. `Navbar`) esté **dentro** de `<CartProvider>`:
+  ```jsx
+  // CartContext.jsx
+  export function CartProvider({ children }) { ... }
+  export function useCart() { ... }
+
+  // App.jsx
+  import { CartProvider } from "./context/CartContext.jsx";
+
+  // Navbar.jsx
+  import { useCart } from "../context/CartContext.jsx";
+  ```
+
+- **404 en GitHub Pages**  
+  Usa `HashRouter` para evitar errores al refrescar rutas internas.
 
 ---
 
-## 👤 Autor
+## 🧪 Cómo validar el Hito 5
 
-Proyecto realizado por **Daniel Aros** en el marco del Bootcamp **Desafío Latam**.
+- Navega a `/`, `/login`, `/register`, `/cart`, `/profile`, `/pizza/p001`.
+- Verifica que **NotFound** se muestre en rutas inexistentes.
+- Comprueba que el botón **🛒 Total** lleva a `/cart`.
+- Revisa que `Login` y `Register` **mantienen sus estilos** originales.
 
 ---
 
+## 🛠️ Stack
+
+- **React 18 + Vite**
+- **React Router**
+- **Bootstrap**
+- **Context API** (carrito)
+
+---
+
+## 🤝 Flujo de contribución (branch → PR)
+
+```bash
+git checkout -b feature/hito5nueva
+git add .
+git commit -m "Hito 5: rutas, pages, NotFound y Profile (sin cambios de estilos en formularios)"
+git push -u origin feature/hito5
+
+# con GitHub CLI (opcional)
+gh pr create --base main --head feature/hito5nueva   --title "Hito 5: Enrutamiento + pages + NotFound + Profile"   --body "Se migran vistas a /pages, se agrega ruta fija /pizza/p001, NotFound y Profile; Navbar con Links y botón Cart. Formularios sin cambios de estilos."
+```
