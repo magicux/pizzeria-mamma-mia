@@ -4,6 +4,7 @@ import { clp } from "../utils/format";
 import { useCart } from "../context/CartContext.jsx"; // contexto
 
 const Navbar = () => {
+  // HITO 6: leer total desde el CartContext
   const { total } = useCart(); // total ahora viene del contexto
   const token = true; // simulación
 
@@ -45,11 +46,11 @@ const Navbar = () => {
             </NavLink>
           </>
         )}
-
-        {/* Total actualizable */}
-        <NavLink to="/cart" className="btn btn-success">
-          🛒 Total: ${clp(total)}
-        </NavLink>
+              
+          {/* Total actualizable */}
+            <NavLink to="/cart" className="btn btn-outline-light ms-auto">
+             🛒 Total: ${clp(total)}
+           </NavLink>
       </div>
     </nav>
   );

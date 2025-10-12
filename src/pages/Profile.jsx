@@ -1,4 +1,6 @@
+
 function Profile() {
+  
   const email = "usuario@demo.cl";
   return (
     <div className="container py-4">

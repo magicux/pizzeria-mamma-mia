@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import { getPizzaById } from "../services/api";
 import { clp } from "../utils/format"; // usar helper existente
+// HITO 6 (opcional): consumir pizzas desde contexto en vez de fetch local
+import { usePizzas } from "../context/PizzasContext.jsx";
+
 
 export default function Pizza() {
   const [pizza, setPizza] = useState(null);
