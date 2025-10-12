@@ -1,9 +1,11 @@
 // src/components/Cart.jsx
+// HITO 6: importar total global del carrito (Req. 2 y 5)
 import { clp } from "../utils/format.js";
 import { useCart } from "../context/CartContext.jsx";
 import { pizzas } from "../data/pizzas.js";
 
 const Cart = () => {
+  // HITO 6: cart + acciones + total desde el Context
   const { cart, inc, dec, add, total } = useCart();
 
   const isEmpty = cart.length === 0;

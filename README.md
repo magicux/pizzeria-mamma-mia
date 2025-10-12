@@ -1,216 +1,179 @@
 # 🍕 Pizzería Mamma Mía
 
 Proyecto desarrollado con **React + Vite** y **Bootstrap** como parte del Bootcamp **Desafío Latam**.  
-Implementa componentes reutilizables, manejo de estado, enrutamiento con React Router y un **carrito de compras** con Context API.
+Implementa componentes reutilizables, manejo de estado, enrutamiento con React Router y un **carrito de compras global** mediante **Context API**.
 
 ---
 
 ## 🧭 Hitos
 
 ### ✅ Hito 1
-- Configuración del proyecto con **React + Vite**.
-- Integración de **Bootstrap**.
-- Componentes base:
-  - `Navbar`, `Header`, `Footer`, `CardPizza`.
-  - `Home` (vista principal que renderiza cards de pizzas).
-
-### ✅ Hito 2
-- Manejo de **estado** y **eventos** en React.
-- **Formularios** (Login / Register) con validaciones básicas.  
-  > **Importante:** los estilos de los formularios se mantienen sin cambios.
-
-### ✅ Hito 5 (enfatizado en este README)
-**Objetivo:** incorporar **enrutamiento con React Router** y estandarizar la estructura **pages** para las vistas.
-
-**Checklist del Hito 5 (cumplido):**
-- [x] Migración/organización de vistas en `src/pages/`:
-  - `Home.jsx`, `Login.jsx`, `Register.jsx`, `Cart.jsx`, `Pizza.jsx`, `Profile.jsx`, `NotFound.jsx`.
-- [x] **Mapa de rutas**:
-  - `/` → Home  
-  - `/login` → Login (form existente, **sin cambios de estilos**)  
-  - `/register` → Register (form existente, **sin cambios de estilos**)  
-  - `/cart` → Cart  
-  - `/pizza/p001` → **Detalle fijo** de una pizza (ruta **estática** exigida por el hito)  
-  - `/profile` → **Profile** (email estático + botón “Cerrar sesión”)  
-  - `*` → **NotFound** (404 con botón “Volver al inicio”)
-- [x] `Navbar` con **Links** a las rutas y **botón 🛒** que redirige a `/cart` mostrando el **Total** del carrito.
-- [x] Página **NotFound** dedicada (no un H2 inline).
-- [x] Mantener `HashRouter`/`BrowserRouter` según despliegue (para **GitHub Pages** se recomienda `HashRouter`).
+- Configuración del proyecto con **React + Vite**.  
+- Integración de **Bootstrap**.  
+- Creación de componentes base:
+  - `Navbar`, `Header`, `Footer`, `CardPizza`.  
+  - `Home` (vista principal que renderiza las cards de pizzas).
 
 ---
 
-## 🗂️ Estructura de carpetas
+### ✅ Hito 2
+- Manejo de **estado** y **eventos** en React.  
+- Creación de **formularios** (`Login` / `Register`) con validaciones básicas.  
+- Se mantienen los **estilos originales** de los formularios.
+
+---
+
+### ✅ Hito 5  
+**Objetivo:** incorporar **enrutamiento con React Router** y organizar las vistas en `src/pages/`.
+
+**Checklist cumplido:**
+- Rutas principales: `/`, `/login`, `/register`, `/cart`, `/profile`, `/pizza/p001`, `* → NotFound`.  
+- `Navbar` con enlaces de navegación y botón 🛒 que muestra el total.  
+- `Profile` con email estático y botón *Cerrar sesión*.  
+- `NotFound` con mensaje 404 y botón *Volver al inicio*.  
+
+---
+
+### ✅ Hito 6 (**Carrito global y Context API**)
+**Objetivo:** conectar toda la aplicación mediante estados globales (carrito y catálogo) utilizando **React Context API**.
+
+#### 🔹 Requerimientos implementados
+- [x] **`CartContext`**:  
+  - Maneja el estado global del carrito.  
+  - Permite agregar pizzas desde cualquier vista.  
+  - Incrementar / decrementar cantidad (+ / −).  
+  - Eliminar ítems con cantidad 0.  
+  - Calcular el **total global** mostrado en `Navbar` y `Cart`.  
+
+- [x] **`PizzasContext`**:  
+  - Centraliza el listado de pizzas (simulado desde datos locales o JSON).  
+  - Evita duplicar el `fetch` en `Home`.  
+
+- [x] **`CardPizza`**:  
+  - Muestra nombre, ingredientes, imagen y precio.  
+  - Botón **“Añadir”** que agrega la pizza al carrito usando `useCart()`.  
+
+- [x] **`Cart.jsx`**:  
+  - Lista las pizzas agregadas con nombre, imagen, precio unitario y subtotal.  
+  - Botones (+ / −) para modificar cantidad en tiempo real.  
+  - Total calculado con precisión y sincronizado con el `Navbar`.  
+
+- [x] **`Navbar.jsx`**:  
+  - Muestra el **total** del carrito desde el contexto global.  
+  - Redirige a `/cart` al hacer clic en el botón 🛒.  
+
+- [x] Flujo de datos completamente funcional entre `Home`, `Cart` y `Navbar`.
+
+---
+
+## 🗂️ Estructura del proyecto
 
 ```bash
 src/
   components/
     Navbar.jsx
+    Header.jsx
     Footer.jsx
     CardPizza.jsx
-    # otros componentes reutilizables
   context/
-    CartContext.jsx
+    CartContext.jsx       # Lógica global del carrito
+    PizzasContext.jsx     # Centraliza el listado de pizzas
   pages/
     Home.jsx
-    Login.jsx          # (basado en tu LoginPage original, mismo estilo)
-    Register.jsx       # (basado en tu RegisterPage original, mismo estilo)
+    LoginPage.jsx
+    RegisterPage.jsx
     Cart.jsx
-    Pizza.jsx          # /pizza/p001 (ruta fija)
-    Profile.jsx        # email estático + botón "Cerrar sesión"
-    NotFound.jsx       # 404 con botón "Volver al inicio"
+    Pizza.jsx
+    Profile.jsx
+    NotFound.jsx
   App.jsx
   main.jsx
-  index.css
 ```
-
-> **Nota:** Se respeta el diseño y estilos existentes de los formularios (Login/Register).
 
 ---
 
-## 🧩 Enrutamiento (React Router)
-
-`App.jsx` define las rutas y envuelve la app con el **CartProvider**:
+## 🧩 Envoltorio de Providers en App.jsx
 
 ```jsx
-import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar.jsx";
-import Footer from "./components/Footer.jsx";
-
-import Home from "./pages/Home.jsx";
-import Login from "./pages/LoginPage.jsx";
-import Register from "./pages/RegisterPage.jsx";
-import Cart from "./pages/Cart.jsx";
-import Pizza from "./pages/Pizza.jsx";
-import Profile from "./pages/Profile.jsx";
-import NotFound from "./pages/NotFound.jsx";
-
+import { PizzasProvider } from "./context/PizzasContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 
 function App() {
   return (
-    <CartProvider>
-      <div className="d-flex flex-column min-vh-100">
-        <Navbar />
-        <main className="flex-grow-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/pizza/p001" element={<Pizza />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </CartProvider>
+    <PizzasProvider>
+      <CartProvider>
+        {/* Navbar, Rutas, Footer */}
+      </CartProvider>
+    </PizzasProvider>
   );
 }
+
 export default App;
 ```
 
-En `main.jsx`:  
-- Para **GitHub Pages**, usa `HashRouter`.  
-- Para hosting tradicional (servidor con soporte a history API), `BrowserRouter`.
+---
+
+## 🛒 Lógica del Carrito
+
+- **add(pizza)** → agrega o incrementa cantidad de la pizza seleccionada.  
+- **inc(id)** / **dec(id)** → modifican cantidad.  
+- **total** → valor total acumulado (`price × qty`).  
+- `Navbar` y `Cart` consumen el mismo `total` desde `CartContext`.  
+- Se manejan errores con mensajes amigables (`useCart debe usarse dentro de <CartProvider>`).
 
 ---
 
-## 🛒 Navbar y Carrito
+## 🧪 Validación del Hito 6
 
-- `Navbar` usa `NavLink`/`Link` para navegación.
-- El botón **🛒 Total** redirige a `/cart` y muestra el total desde el **CartContext**.
-- **No** se agrega `/pizza/p001` al menú (requisito del hito).
-
----
-
-## 👤 Profile y 🚫 NotFound
-
-- `Profile.jsx` muestra un **email estático** y un **botón “Cerrar sesión”** (sin lógica de auth en este hito).
-- `NotFound.jsx` entrega una pantalla 404 con **botón para volver al inicio**.
+1. **Home:** muestra las pizzas desde `PizzasContext`.  
+2. **Botón “Añadir”:** incrementa el total en `Navbar`.  
+3. **Cart:** refleja las pizzas añadidas, con cantidades correctas.  
+4. **Botones + / −:** actualizan el subtotal y el total general.  
+5. **Total:** coincide entre `Navbar` y `Cart`.  
+6. **Sin duplicación de datos:** Home ya no realiza `fetch` directo.
 
 ---
 
 ## ▶️ Scripts
 
 ```bash
-# instalar dependencias
+# Instalar dependencias
 npm install
 
-# entorno de desarrollo
+# Ejecutar en desarrollo
 npm run dev
 
-# build de producción
+# Generar build de producción
 npm run build
 
-# previsualizar build
+# Previsualizar el build
 npm run preview
 ```
 
 ---
 
-## 🚀 Despliegue en GitHub Pages (opcional)
+## 🚀 Despliegue (GitHub Pages)
 
-1) Usa `HashRouter` en `main.jsx`.  
-2) Publica `dist` en GitHub Pages (branch `gh-pages` o desde Settings → Pages).  
-3) Si usas subruta (`/pizzeria-mamma-mia/`), configura la `base` de Vite.
-
----
-
-## 🔧 Troubleshooting rápido
-
-- **“does not provide an export named 'default'”**  
-  Exporta como **default** en cada página:
-  ```jsx
-  export default function NotFound() { ... }
-  export default function Profile() { ... }
-  ```
-
-- **“useCart debe usarse dentro de <CartProvider>”**  
-  Verifica que quien usa `useCart()` (p. ej. `Navbar`) esté **dentro** de `<CartProvider>`:
-  ```jsx
-  // CartContext.jsx
-  export function CartProvider({ children }) { ... }
-  export function useCart() { ... }
-
-  // App.jsx
-  import { CartProvider } from "./context/CartContext.jsx";
-
-  // Navbar.jsx
-  import { useCart } from "../context/CartContext.jsx";
-  ```
-
-- **404 en GitHub Pages**  
-  Usa `HashRouter` para evitar errores al refrescar rutas internas.
+1. Configura `base: "/pizzeria-mamma-mia/"` en `vite.config.js`.  
+2. Usa `npm run build` para generar el proyecto.  
+3. Publica `/dist` en GitHub Pages (rama `gh-pages` o desde *Settings → Pages*).  
+4. Utiliza `HashRouter` en `main.jsx` para evitar errores 404.
 
 ---
 
-## 🧪 Cómo validar el Hito 5
+## 🧱 Stack Tecnológico
 
-- Navega a `/`, `/login`, `/register`, `/cart`, `/profile`, `/pizza/p001`.
-- Verifica que **NotFound** se muestre en rutas inexistentes.
-- Comprueba que el botón **🛒 Total** lleva a `/cart`.
-- Revisa que `Login` y `Register` **mantienen sus estilos** originales.
-
----
-
-## 🛠️ Stack
-
-- **React 18 + Vite**
-- **React Router**
-- **Bootstrap**
-- **Context API** (carrito)
+- **React 18 + Vite**  
+- **React Router DOM**  
+- **Bootstrap 5**  
+- **Context API**
 
 ---
 
-## 🤝 Flujo de contribución (branch → PR)
+## 💬 Comentario Final
 
-```bash
-git checkout -b feature/hito5nueva
-git add .
-git commit -m "Hito 5: rutas, pages, NotFound y Profile (sin cambios de estilos en formularios)"
-git push -u origin feature/hito5
-
-# con GitHub CLI (opcional)
-gh pr create --base main --head feature/hito5nueva   --title "Hito 5: Enrutamiento + pages + NotFound + Profile"   --body "Se migran vistas a /pages, se agrega ruta fija /pizza/p001, NotFound y Profile; Navbar con Links y botón Cart. Formularios sin cambios de estilos."
-```
+El **Hito 6** completa la funcionalidad principal de la aplicación:  
+- Manejo global de estado mediante Context API.  
+- Comunicación directa entre componentes sin prop-drilling.  
+- Sincronización en tiempo real entre Home, Navbar y Cart.  
+- Preparación lista para integrar servicios externos o backend real.
