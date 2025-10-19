@@ -1,14 +1,13 @@
+// HITO 7: Ruta protegida; solo visible si hay token (protegida por <PrivateRoute> en App.jsx).
+import { useUser } from "../context/UserContext.jsx";
 
-function Profile() {
-  
-  const email = "usuario@demo.cl";
+export default function Profile() {
+  const { token } = useUser();
   return (
-    <div className="container py-4">
-      <h2>Mi perfil</h2>
-      <p><strong>Email:</strong> {email}</p>
-      <button className="btn btn-outline-danger">Cerrar sesión</button>
+    <div className="container py-5">
+      <h2 className="mb-3">Mi perfil</h2>
+      <p className="text-muted">Estás autenticado. Token actual:</p>
+      <code className="d-block p-3 bg-light rounded">{token}</code>
     </div>
   );
 }
-
-export default Profile;

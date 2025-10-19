@@ -1,18 +1,15 @@
-// src/router/guards.jsx
-// HITO 7: Wrappers de rutas protegidas y de invitado
+// HITO 7: Guards de rutas (protegidas / solo invitados).
 import { Navigate } from "react-router-dom";
 import { useUser } from "../context/UserContext.jsx";
 
-// Rutas que requieren estar autenticado
+// Rutas que requieren sesión. Si no hay token, redirige a /login.
 export function PrivateRoute({ children }) {
   const { token } = useUser();
-  if (!token) return <Navigate to="/login" replace />;
-  return children;
+  return token ? children : <Navigate to="/login" replace />;
 }
 
-// Rutas solo para invitados: si hay token, redirige al home
+// Rutas para invitados. Si hay token, redirige a home.
 export function RedirectIfAuth({ children }) {
   const { token } = useUser();
-  if (token) return <Navigate to="/" replace />;
-  return children;
+  return token ? <Navigate to="/" replace /> : children;
 }
