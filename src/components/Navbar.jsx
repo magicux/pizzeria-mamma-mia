@@ -40,10 +40,10 @@ const Navbar = () => {
                 {token ? (
                     <>
                         <NavLink to="/profile" className={linkClass}>
-                            Profile
+                            👤 Profile
                         </NavLink>
                         <button className="btn btn-outline-warning" onClick={handleLogout}>
-                            Logout
+                            🔒 Logout
                         </button>
                     </>
                 ) : (
