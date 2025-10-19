@@ -1,5 +1,3 @@
-// src/components/Cart.jsx
-// HITO 6: importar total global del carrito (Req. 2 y 5)
 import { clp } from "../utils/format.js";
 import { useCart } from "../context/CartContext.jsx";
 import { pizzas } from "../data/pizzas.js";
@@ -10,6 +8,20 @@ const Cart = () => {
 
   const isEmpty = cart.length === 0;
 
+  const handleAdd = (p) => {
+    // intentar añadir el objeto completo; si el contexto espera id, también intentamos con p.id
+    if (!add) return console.warn("Función add no disponible en el contexto");
+    try {
+      add(p); // preferimos pasar el objeto completo
+    } catch (e) {
+      try {
+        add(p.id);
+      } catch (err) {
+        console.error("No se pudo añadir la pizza al carrito", err);
+      }
+    }
+  };
+
   return (
     <main className="container py-4">
       <h2 className="mb-4">Tu Carrito 🧺</h2>
@@ -17,7 +29,8 @@ const Cart = () => {
       {isEmpty ? (
         <>
           <div className="alert alert-info">No tienes productos en el carrito.</div>
-          {/* Catálogo cuando está vacío */}
+
+          {/* Catálogo cuando está vacío: mostrar todos los datos y permitir añadir */}
           <h5 className="mt-3">Sigue comprando 🍕</h5>
           <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
             {pizzas.map((p) => (
@@ -25,10 +38,19 @@ const Cart = () => {
                 <div className="card h-100 shadow-sm">
                   <img src={p.img} className="card-img-top" alt={p.name} />
                   <div className="card-body d-flex flex-column">
-                    <h6 className="card-title">{p.name}</h6>
+                    <h5 className="card-title">{p.name}</h5>
+                    {p.ingredients && (
+                      <p className="text-muted small mb-2">
+                        {p.ingredients.join(" · ")}
+                      </p>
+                    )}
+                    <p className="mb-2 text-muted">ID: {p.id}</p>
                     <p className="fw-bold mb-3">${clp(p.price)}</p>
-                    <button className="btn btn-primary mt-auto" onClick={() => add(p.id)}>
-                      Añadir
+                    <button
+                      className="btn btn-primary mt-auto"
+                      onClick={() => handleAdd(p)}
+                    >
+                      Añadir al carrito
                     </button>
                   </div>
                 </div>
