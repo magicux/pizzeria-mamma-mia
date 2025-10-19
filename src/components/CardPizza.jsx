@@ -2,14 +2,14 @@
 /* eslint-disable react/prop-types */
 // HITO 6: usar el contexto para poder añadir desde Home (Req. 3)
 import { useCart } from "../context/CartContext.jsx";
-import { clp } from "../utils/format.js"; 
+import { clp } from "../utils/format.js";
 
 export default function CardPizza({ id, name, price, ingredients, img }) {
   // HITO 6: el hook debe ir DENTRO del componente
   const { add } = useCart();
 
   // HITO 6: pasar objeto con id, name, price, img
-const handleAdd = () => add({ id, name, price, img });
+  const handleAdd = () => add({ id, name, price, img });
 
   return (
     <div className="col">
@@ -30,7 +30,10 @@ const handleAdd = () => add({ id, name, price, img });
             <span className="fw-bold fs-5">{clp(price)}</span>
 
             {/* HITO 6: botón Añadir que agrega por id (Req. 3) */}
-            <button className="btn btn-primary" onClick={handleAdd}>
+            <button
+              className="btn btn-primary"
+              onClick={() => add({ id, name, price, img })}
+            >
               Añadir
             </button>
           </div>

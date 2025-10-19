@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useUser } from "../context/UserContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [form, setForm] = useState({ email: "", password: "", confirm: "" });
@@ -7,7 +9,10 @@ const RegisterPage = () => {
   const onChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  const { login } = useUser();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password, confirm } = form;
 
@@ -21,6 +26,9 @@ const RegisterPage = () => {
       return setMsg({ type: "danger", text: "Las contraseñas no coinciden." });
     }
     setMsg({ type: "success", text: "Registro exitoso 🎉" });
+    await login(email, password); // tras registrar, iniciar sesión
++   navigate("/");
+
   };
 
   return (

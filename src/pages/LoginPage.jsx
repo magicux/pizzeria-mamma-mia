@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useUser } from "../context/UserContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -6,8 +8,10 @@ const LoginPage = () => {
 
   const onChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-
-  const handleSubmit = (e) => {
+  
+  const { login } = useUser();
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = form;
 
@@ -19,6 +23,8 @@ const LoginPage = () => {
     }
 
     setMsg({ type: "success", text: "Inicio de sesión exitoso ✅" });
+    await login(email, password); // tras registrar, iniciar sesión
++   navigate("/");
   };
 
   return (

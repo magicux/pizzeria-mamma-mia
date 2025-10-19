@@ -1,25 +1,27 @@
 // Hito 4: vista de detalle por id fijo (p001)
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { getPizzaById } from "../services/api";
 import { clp } from "../utils/format"; // usar helper existente
 // HITO 6 (opcional): consumir pizzas desde contexto en vez de fetch local
 import { usePizzas } from "../context/PizzasContext.jsx";
 
-
 export default function Pizza() {
+  const { id } = useParams(); // HITO 7: tomar :id desde la URL
   const [pizza, setPizza] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    let mounted = true;
-    const ID_FIJO = "p001"; //  Hito 4: id fijo por requisito
-    getPizzaById(ID_FIJO)
-      .then((data) => mounted && setPizza(data))
-      .catch(() => mounted && setError("No fue posible cargar la pizza"))
-      .finally(() => mounted && setLoading(false));
-    return () => (mounted = false);
-  }, []);
+ useEffect(() => {
+   let mounted = true;
+   (async () => {
+     try {
+       const data = await getPizzaById(id);
+       if (mounted) setPizza(data);
+     } catch (_) {}
+   })();
+   return () => { mounted = false; };
+ }, [id]);
 
   if (loading) return <div className="container py-5">Cargando pizza...</div>;
   if (error) return <div className="container py-5 text-danger">{error}</div>;
