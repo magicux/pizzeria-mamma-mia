@@ -9,7 +9,6 @@ export default function CardPizza({ id, name, price, ingredients, img }) {
   const { add } = useCart();
 
   // HITO 6: pasar objeto con id, name, price, img
-  const handleAdd = () => add({ id, name, price, img });
 
   return (
     <div className="col">
