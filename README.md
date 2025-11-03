@@ -1,112 +1,110 @@
+cat > README_Hito8_Pizzeria_Mamma_Mia.md <<'EOF'
 # 🍕 Pizzería Mamma Mía
 
 Proyecto desarrollado con **React + Vite** y **Bootstrap** como parte del Bootcamp **Desafío Latam**.  
-Implementa componentes reutilizables, manejo de estado, enrutamiento con React Router y un **carrito de compras global** mediante **Context API**.
+Implementa componentes reutilizables, manejo de estado, enrutamiento con React Router y un **carrito de compras** global mediante **Context API**.  
+A partir del **Hito 8**, la aplicación incorpora **autenticación real con JWT** y **checkout** que consume un backend con token.
+
+---
+
+## 🚀 Stack Tecnológico
+
+- **React 18 + Vite**
+- **React Router DOM**
+- **Bootstrap 5**
+- **Context API** (para `UserContext` y `CartContext`)
+- **Fetch API**
+- **Autenticación JWT (JSON Web Token)**
 
 ---
 
 ## 🧭 Hitos
 
 ### ✅ Hito 1
-- Configuración del proyecto con **React + Vite**.  
-- Integración de **Bootstrap**.  
+- Configuración inicial del proyecto con **React + Vite**.
+- Integración de **Bootstrap**.
 - Creación de componentes base:
-  - `Navbar`, `Header`, `Footer`, `CardPizza`.  
-  - `Home` (vista principal que renderiza las cards de pizzas).
-
-### ✅ Hito 2
-- Manejo de **estado** y **eventos** en React.  
-- Creación de **formularios** (`Login` / `Register`) con validaciones básicas.  
-- Se mantienen los **estilos originales** de los formularios.
-
-### ✅ Hito 5  
-**Objetivo:** incorporar **enrutamiento con React Router** y organizar las vistas en `src/pages/`.
-
-**Checklist cumplido:**
-- Rutas principales: `/`, `/login`, `/register`, `/cart`, `/profile`, `/pizza/p001`, `* → NotFound`.  
-- `Navbar` con enlaces de navegación y botón 🛒 que muestra el total.  
-- `Profile` con email estático y botón *Cerrar sesión*.  
-- `NotFound` con mensaje 404 y botón *Volver al inicio*.  
-
-### ✅ Hito 6 (**Carrito global y Context API**)
-**Objetivo:** conectar toda la aplicación mediante estados globales (carrito y catálogo) utilizando **React Context API**.
-
-#### 🔹 Requerimientos implementados
-- **`CartContext`**:  
-  - Maneja el estado global del carrito.  
-  - Permite agregar pizzas desde cualquier vista.  
-  - Incrementar / decrementar cantidad (+ / −).  
-  - Eliminar ítems con cantidad 0.  
-  - Calcular el **total global** mostrado en `Navbar` y `Cart`.  
-
-- **`PizzasContext`**:  
-  - Centraliza el listado de pizzas (simulado desde datos locales o JSON).  
-  - Evita duplicar el `fetch` en `Home`.  
-
-- **`CardPizza`**:  
-  - Muestra nombre, ingredientes, imagen y precio.  
-  - Botón **“Añadir”** que agrega la pizza al carrito usando `useCart()`.  
-
-- **`Cart.jsx`**:  
-  - Lista las pizzas agregadas con nombre, imagen, precio unitario y subtotal.  
-  - Botones (+ / −) para modificar cantidad en tiempo real.  
-  - Total calculado con precisión y sincronizado con el `Navbar`.  
-
-- **`Navbar.jsx`**:  
-  - Muestra el **total** del carrito desde el contexto global.  
-  - Redirige a `/cart` al hacer clic en el botón 🛒.  
+  - `Navbar`, `Header`, `Footer`, `CardPizza`, `Home`.
 
 ---
 
-### ✅ Hito 7 (**Autenticación simulada, persistencia y protecciones**)
+### ✅ Hito 2
+- Manejo de **estado** y **eventos** en React.
+- Formularios (`Login` / `Register`) con validaciones básicas.
+- Se mantienen los estilos originales de los formularios.
 
-**Objetivo:** añadir contexto de usuario (token), persistencia en localStorage y rutas protegidas/guest.
+---
 
-#### 🔹 Cambios y funcionalidades agregadas
-- **`UserContext`**:
-  - Nuevo contexto que maneja `token`, `login(email, password)` y `logout()`.
-  - Persistencia del token en `localStorage` (se guarda/borra automáticamente).
-  - Exporta `UserProvider` y el hook `useUser()` que valida su uso dentro del provider.
-- **Rutas protegidas y de invitado**:
-  - `PrivateRoute` para proteger `/profile` (redirige a `/login` si no hay token).
-  - `RedirectIfAuth` o guard para rutas de invitado (`/login`, `/register`) que redirige a `/` si ya hay token.
-- **Integración en la UI**:
-  - `Navbar` consume `useUser()` para mostrar `Profile` / `Logout` cuando hay token, o `Login` / `Register` si no.
-  - `Profile` muestra el token actual y permite `logout`.
-- **Persistencia y flujo**:
-  - Login simulado (si hay email y password se genera token demo).
-  - Token persiste entre recargas; `logout` limpia token y localStorage.
-- **Entrada (main.jsx)**:
-  - La app se envuelve con los providers en `main.jsx`: `BrowserRouter > UserProvider > CartProvider > PizzasProvider > App`.
-  - Solo un `BrowserRouter` en la app (evitar errores "You cannot render a <Router> inside another <Router>").
-- **Mejoras en UX**:
-  - Guardias para evitar que componentes que consumen contextos se rendericen fuera de sus providers (evitar errores tipo "useX debe usarse dentro de <XProvider>").
+### ✅ Hito 5
+- Incorporación de **React Router DOM**.
+- Organización de vistas en `src/pages/`.
+- Rutas principales:  
+  `/`, `/login`, `/register`, `/cart`, `/profile`, `/pizza/:id`, `*` (404).
+- `Navbar` con enlaces dinámicos y botón con **total del carrito**.
+- `Profile` muestra email estático y botón **Cerrar sesión**.
+- `NotFound` muestra página 404 y botón para volver al inicio.
 
+---
+
+### ✅ Hito 6 (Context API – Carrito Global)
+- Creación de **`CartContext`** para manejar el carrito global:
+  - Añadir, aumentar, disminuir y eliminar productos.
+  - Cálculo del total global mostrado en `Navbar` y `Cart`.
+- Creación de **`PizzasContext`** (catálogo global).
+- `CardPizza` muestra datos y permite añadir pizzas al carrito.
+- `Cart.jsx` muestra ítems, subtotales y total actualizable.
+
+---
+
+### ✅ Hito 7 (Autenticación Simulada + Rutas Protegidas)
+- Creación de **`UserContext`** para manejar la sesión simulada:
+  - `token`, `login`, `logout`, persistencia en `localStorage`.
+- Implementación de **rutas protegidas**:
+  - `PrivateRoute` protege `/profile`.
+  - `RedirectIfAuth` evita que usuarios logeados accedan a `/login` o `/register`.
+- `Navbar` alterna opciones según sesión activa.
+- `Profile` muestra email y permite cerrar sesión.
+
+---
+
+### ✅ Hito 8 (JWT + Checkout Real)
+**Objetivo:** conectar la app con un **backend real con JWT**, utilizando endpoints `/api/auth/login`, `/api/auth/register`, `/api/auth/me` y `/api/checkouts`.
+
+#### 🔒 Autenticación real (UserContext)
+- `src/config.js`: centraliza la URL del backend
+  ```js
+  export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 ---
 
 ## 🗂️ Estructura del proyecto (actualizada)
 
-```bash
 src/
-  components/
-    Navbar.jsx
-    Header.jsx
-    Footer.jsx
-    CardPizza.jsx
-  context/
-    UserContext.jsx       # HITO 7: token + login + logout + persistencia
-    CartContext.jsx       # HITO 6: Lógica global del carrito
-    PizzasContext.jsx     # HITO 6: Centraliza el listado de pizzas
-  pages/
-    Home.jsx
-    LoginPage.jsx
-    RegisterPage.jsx
-    Cart.jsx
-    Pizza.jsx
-    Profile.jsx
-    NotFound.jsx
-  App.jsx
-  main.jsx
+ ├─ components/
+ │   ├─ Navbar.jsx
+ │   ├─ Header.jsx
+ │   ├─ Footer.jsx
+ │   └─ CardPizza.jsx
+ │
+ ├─ context/
+ │   ├─ UserContext.jsx     # JWT login/register/me/logout + persistencia
+ │   ├─ CartContext.jsx     # Manejo global del carrito
+ │   └─ PizzasContext.jsx   # Catálogo global
+ │
+ ├─ pages/
+ │   ├─ Home.jsx
+ │   ├─ LoginPage.jsx
+ │   ├─ RegisterPage.jsx
+ │   ├─ Cart.jsx
+ │   ├─ Pizza.jsx
+ │   ├─ Profile.jsx
+ │   └─ NotFound.jsx
+ │
+ ├─ router/
+ │   └─ guards.jsx          # PrivateRoute / RedirectIfAuth
+ │
+ ├─ config.js               # API_URL centralizado (Hito 8)
+ ├─ App.jsx
+ └─ main.jsx
 ```
 
 ---
@@ -150,74 +148,43 @@ npm run preview
 
 ---
 
-## 🧪 Ejemplos de uso del UserContext (Hito 7)
+🧪 Pruebas Manuales Sugeridas (Hito 8)
 
-- Uso del hook en un componente (p. ej. `Profile.jsx` o `Navbar.jsx`):
+Registro → /register → redirige a /profile.
 
-```jsx
-import { useUser } from "../context/UserContext.jsx";
+Persistencia → F5 → mantiene sesión.
 
-function Example() {
-  const { token, login, logout } = useUser();
+Logout → limpia localStorage y redirige a /login.
 
-  // login simulado
-  const handleLogin = async () => {
-    await login("correo@ejemplo.com", "password");
-    // ahora token está disponible y persistido en localStorage
-  };
-
-  return (
-    <div>
-      <p>Token: {token || "(no autenticado)"}</p>
-      <button onClick={handleLogin}>Login demo</button>
-      <button onClick={logout}>Logout</button>
-    </div>
-  );
-}
-```
-
-- `UserProvider` en `main.jsx` (entrada única, envuelve App):
-
-```jsx
-import { BrowserRouter } from "react-router-dom";
-import { UserProvider } from "./context/UserContext.jsx";
-import { CartProvider } from "./context/CartContext.jsx";
-import { PizzasProvider } from "./context/PizzasContext.jsx";
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <UserProvider>
-      <CartProvider>
-        <PizzasProvider>
-          <App />
-        </PizzasProvider>
-      </CartProvider>
-    </UserProvider>
-  </BrowserRouter>
-);
-```
-
-- Nota: `useUser()` lanza un error si se usa fuera de `UserProvider`. Asegúrate de envolver la app correctamente.
-
+Checkout → POST /api/checkouts con JWT → mensaje “¡Compra realizada con éxito! ✅”.
 ---
-
+✅ Checklist Final – Hito 8
+Elemento	          Descripción	                                    Estado
+config.js	          Centraliza API_URL (lee .env.local)         	    ✅
+UserContext	        JWT login/register/me/logout + persistencia	      ✅
+Navbar	            Alterna botones según sesión y ejecuta logout	    ✅
+Profile	Protegido,  muestra email y permite cerrar sesión       	    ✅
+Cart	              Checkout real con JWT + feedback visual	          ✅
+Guards              (router/guards.jsx)	PrivateRoute y RedirectIfAuth	✅
+App.jsx	            UserProvider + CartProvider envuelven la app	    ✅
+.env.local	        Incluye VITE_API_URL	                            ✅
 ## 🧭 Comandos Git para crear rama y pull request (ejemplo)
 
 ```bash
 # crear rama con todos los cambios
-git checkout -b feature/hito7-full-update
+git checkout -b feature/hito8-full-update
 
 # añadir todos los cambios
 git add .
 
 # commit
-git commit -m "Hito 7: UserContext, providers y guards; mejoras en Cart y Nav"
+git commit -m "Hito 8: JWT"
 
 # push a remoto
-git push origin feature/hito7-full-update
+git push origin feature/hito8-full-update
 ```
 
 Después de push, crea el Pull Request en GitHub:
 - Ve a tu repo → pestaña "Pull requests" → "New pull request".
-- Selecciona `feature/hito7-full-update` como rama fuente y `main` como destino.
+- Selecciona `feature/hito8-full-update` como rama fuente y `main` como destino.
 - Revisa cambios y crea el PR.
